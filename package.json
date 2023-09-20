@@ -1,0 +1,25 @@
+{
+	"name": "bun-chinese-docs",
+	"version": "0.0.1",
+	"dependencies": {},
+	"devDependencies": {
+		"vitepress": "^1.0.0-rc.14"
+	},
+	"scripts": {
+		"docs:dev": "vitepress dev",
+		"docs:build": "vitepress build",
+		"docs:preview": "vitepress preview",
+		"serve": "vitepress serve"
+	},
+	"config": {
+		"commitizen": {
+			"path": "node_modules/cz-customizable"
+		}
+	},
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx,json,css,scss,less,md}": [
+			"prettier --write",
+			"git add"
+		]
+	}
+}

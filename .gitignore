@@ -1,0 +1,5 @@
+/node_modules
+.DS_Store
+/.vitepress/dist
+/bun.lockb
+yarn.lock
