@@ -3,15 +3,15 @@
 layout: home
 
 hero:
-  name: Bun 中文网
-  tagline: 此文档仅供参考，初学者请阅读 Bun 官网文档
+  name: Bun 中文文档
+  tagline: 此文档仅供参考，初学者请阅读 Bun 中文文档
   image:
     src: /logo.png
     alt: VitePress
   actions:
     - theme: brand
       text: 开始阅读
-      link: /docs/Intro/installation.md
+      link: /docs/intro/installation.md
     - theme: alt
       text: 在 GitHub 上查看
       link: https://github.com/212063551/bun-chinese-docs
