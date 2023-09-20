@@ -14,9 +14,9 @@
 | :-------------: | :----------: | :----: | :--: |
 |      Intro      |     介绍     |  100%  |  ✅  |
 |     Runtime     |    运行时    |   1%   |  ❌  |
-| Package manager |   包管理器   | 未开始 |  ❌  |
+| package manager |   包管理器   | 未开始 |  ❌  |
 |     Bundler     |     打包     | 未开始 |  ❌  |
 |   Test runner   |   单元测试   | 未开始 |  ❌  |
-| Package runner  | npx bun 版本 | 未开始 |  ❌  |
+| package runner  | npx bun 版本 | 未开始 |  ❌  |
 |       API       | 应用编程接口 | 未开始 |  ❌  |
 |     Project     |     项目     | 未开始 |  ❌  |
