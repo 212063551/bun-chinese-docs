@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress';
 
 export default defineConfig({
-	base: '/base/',
+	base: '/docs/',
 	title: 'Bun 中文网',
 	description: '一个非官方的 Bun 中文网 学习网',
 	lastUpdated: true,
