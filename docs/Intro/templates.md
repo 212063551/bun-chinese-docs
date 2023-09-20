@@ -171,7 +171,7 @@ $ cd foo
 1. 打开本地模板文件
 2. 递归删除目标目录
 3. 复制文件到指定目录
-4. 解析 Package.json，修改名称 删除 Package.json 文件中`bun-create`部分，并将更新后的 Package.json 保存到磁盘。
+4. 解析 package.json，修改名称 删除 package.json 文件中`bun-create`部分，并将更新后的 package.json 保存到磁盘。
 
    - 如果检测到 `Next.js` ，则在依赖项列表中添加 `bun-framework-next`
    - 如果检测到 `Create React App` ，请将/src/index.{js，jsx，ts，tsx} 中的入口点添加到 public/index.html
