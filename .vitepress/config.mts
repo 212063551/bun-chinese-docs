@@ -1,8 +1,8 @@
 import { defineConfig } from 'vitepress';
 
 export default defineConfig({
-	base: '/bun-chinese-docs/',
 	title: 'Bun 中文文档',
+	lang: 'zh-CN',
 	description: '一个非官方的 Bun 中文文档',
 	lastUpdated: true,
 	ignoreDeadLinks: true,
@@ -62,6 +62,16 @@ export default defineConfig({
 					{ text: 'TypeScript', link: '/docs/runtime/typescript.md' },
 					{ text: 'JSX', link: '/docs/runtime/jsx.md' },
 					{ text: '环境变量', link: '/docs/runtime/env.md' },
+					{ text: 'Bun APIs', link: '/docs/runtime/bun-apis.md' },
+					{ text: 'Web APIs', link: '/docs/runtime/web-apis.md' },
+					{
+						text: 'Bun 对 Node.js 的兼容性',
+						link: '/docs/runtime/nodejs-apis.md',
+					},
+					{
+						text: '插件',
+						link: '/docs/runtime/plugins.md',
+					},
 				],
 			},
 		],
