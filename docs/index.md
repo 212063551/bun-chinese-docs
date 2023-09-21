@@ -25,10 +25,10 @@ BUN 仍在开发中。使用它可以加快您的开发工作流程，或者在�
 您可以通过以下快速链接跳转到您需要的页面或继续阅读以了解有关 Bun 的更多信息。
 
 <div class ="quick-link">
-<Link href="/docs/Intro/installation" title="🛠️ 安装 Bun"/>
-<Link href="/docs/Intro/quickstart" title="🚪 快速入门"/>
+<Link href="/docs/installation" title="🛠️ 安装 Bun"/>
+<Link href="/docs/quickstart" title="🚪 快速入门"/>
 <Link href="/docs/cli/install" title="🛠️ 安装 软件包"/>
-<Link href="/docs/Intro/templates" title="📄 使用项目模板"/>
+<Link href="/docs/templates" title="📄 使用项目模板"/>
 <Link href="/docs/bundler" title="📦 使用Bun 进行代码打包"/>
 <Link href="/docs/api/http" title="⚙️ 构建一个HTTP服务器"/>
 <Link href="/docs/api/websockets" title="🛠️ 构建Websocket服务器"/>
