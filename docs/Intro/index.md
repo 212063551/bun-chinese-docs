@@ -71,6 +71,6 @@ Bun 在设计之初就考虑到了当前的 JavaScript 生态系统。
 
 - Web 标准 API。Bun 实现了标准的 Web API，如 Fetch、WebSocket 和 ReadableStream。Bun 使用苹果开发的 `JavaScriptCore` 引擎提供支持的，因此一些 API，如 `Headers` 和 `URL` 直接使用 Safari 的实现。
 
-<!-- - Bun 与 Node.js 兼容。除了支持 Node 风格的模块解析外，Bun 还致力于与内置的 Node.js 全局变量( 进程、缓冲区 ) 和模块 ( 路径、文件系统、http 等 ) 完全兼容。这是一项尚未完成的持续努力。有关当前状态，请参阅 [兼容性](/docs/runtime/nodejs-apis) 页面。 -->
+- Bun 与 Node.js 兼容。除了支持 Node 风格的模块解析外，Bun 还致力于与内置的 Node.js 全局变量( 进程、缓冲区 ) 和模块 ( 路径、文件系统、http 等 ) 完全兼容。这是一项尚未完成的持续努力。有关当前状态，请参阅 [兼容性](/docs/runtime/nodejs-apis) 页面。
 
 Bun 不仅仅是运行时。长期目标是成为一个有凝聚力的基础设施工具包，用于使用 JavaScript / TypeScript 构建应用程序，包括包管理器、转换编译器、打包、脚本运行器、测试运行器等。

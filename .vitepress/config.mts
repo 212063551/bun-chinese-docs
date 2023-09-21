@@ -31,7 +31,7 @@ export default defineConfig({
 			copyright: 'Made with ❤ by Rune ',
 		},
 		editLink: {
-			pattern: 'https://github.com/212063551/bun-chinese-docs/main/:path',
+			pattern: 'https://github.com/212063551/bun-chinese-docs/blob/main/:path',
 			text: '在 GitHub 上编辑此页面',
 		},
 		nav: [
@@ -58,6 +58,9 @@ export default defineConfig({
 				items: [
 					{ text: 'bun run', link: '/docs/cli/run.md' },
 					{ text: '文件类型', link: '/docs/runtime/loaders.md' },
+					{ text: 'TypeScript', link: '/docs/runtime/typescript.md' },
+					{ text: 'JSX', link: '/docs/runtime/jsx.md' },
+					{ text: '环境变量', link: '/docs/runtime/env.md' },
 				],
 			},
 		],
