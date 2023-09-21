@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: 开始阅读
-      link: /docs/intro/installation.md
+      link: /docs/Intro/installation.md
     - theme: alt
       text: 在 GitHub 上查看
       link: https://github.com/212063551/bun-chinese-docs

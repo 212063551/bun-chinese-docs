@@ -36,7 +36,7 @@ export default defineConfig({
 			text: '在 GitHub 上编辑此页面',
 		},
 		nav: [
-			{ text: '文档', link: '/docs/intro/installation' },
+			{ text: '文档', link: '/docs/Intro/installation' },
 			{ text: '指南', link: '/guides/index.md' },
 			{ text: '更新日志', link: '/logs/index.md' },
 			{ text: '英文官网', link: 'https://bun.sh' },
@@ -47,11 +47,11 @@ export default defineConfig({
 			{
 				text: '介绍',
 				items: [
-					{ text: '什么是Bun？', link: '/docs/intro/index.md' },
-					{ text: '安装', link: '/docs/intro/installation.md' },
-					{ text: '快速入门', link: '/docs/intro/quickstart.md' },
-					{ text: 'TypeScript', link: '/docs/intro/typescript.md' },
-					{ text: '模板', link: '/docs/intro/templates.md' },
+					{ text: '什么是Bun？', link: '/docs/Intro/index.md' },
+					{ text: '安装', link: '/docs/Intro/installation.md' },
+					{ text: '快速入门', link: '/docs/Intro/quickstart.md' },
+					{ text: 'TypeScript', link: '/docs/Intro/typescript.md' },
+					{ text: '模板', link: '/docs/Intro/templates.md' },
 				],
 			},
 			{

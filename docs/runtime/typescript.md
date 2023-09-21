@@ -2,7 +2,7 @@
 
 Bun 将 TypeScript 视为一等公民。
 
-> 您要为 Bun api (如 `bun global`) 添加类型声明，请按照介绍中的 [TypeScript](/docs/intro/typescript.md) 中的说明进行操作。本页描述了 Bun 运行时如何运行 TypeScript 代码。
+> 您要为 Bun api (如 `bun global`) 添加类型声明，请按照介绍中的 [TypeScript](/docs/Intro/typescript.md) 中的说明进行操作。本页描述了 Bun 运行时如何运行 TypeScript 代码。
 
 ## 运行.ts 文件
 
