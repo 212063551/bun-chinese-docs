@@ -39,8 +39,45 @@ $ bun run react.tsx
 
 ## 文本文件
 
+文本文件可以作为字符串导入。
+
+::: code-group
+
+```ts [index.ts]
+import text from './text.txt';
+console.log(text);
+// => "Hello world!"
+```
+
+```md [text.txt]
+Hello world!
+```
+
+:::
+
 ## JSON 和 TOML
 
-## WASM
+JSON 和 TOML 文件可以直接从源文件导入。内容将被加载并作为一个 JavaScript 对象返回。
+
+```ts
+import pkg from './package.json';
+import data from './data.toml';
+```
+
+## 🚧 WASM <Badge type="tip" text="实验" />
+
+Bun 对 [WebAssembly](https://github.com/WebAssembly/WASI) 系统接口提供了实验性支持。要使用 Bun 运行 `.wasm` 二进制文件，请执行以下操作：
+
+```sh
+$ bun ./my-wasm-app.wasm
+# 如果文件名不以 “.wasm” 结尾
+$ bun run ./my-wasm-app.whatever
+```
+
+:::warning 🚨 注意事项
+WASI 支持是基于 [wasi-js](https://github.com/sagemathinc/cowasm/tree/main/core/wasi-js) 的。目前，它只支持使用 `wasi_snapshot_preview1` 或 `wasi_unstable` API 的 WASI 二进制文件。Bun 没有针对性能进行优化；随着 WASI 变得越来越流行，这将成为一个更优先的问题。
+:::
 
 ## 自定义加载器
+
+可以通过插件实现对其他文件类型的支持。请参阅 [运行时插件](/docs/bundler/plugins) 以获取完整文档。
