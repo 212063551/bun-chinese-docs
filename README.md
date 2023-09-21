@@ -8,6 +8,21 @@
 4. 文档内容仅供参考，具体以 [Bun 官方文档](https://bun.sh/docs) 为准。
 5. 欢迎专业人士对此文档进行修正。
 
+### 项目运行
+
+```sh
+# 克隆仓库
+$ git clone https://github.com/212063551/bun-chinese-docs.git
+
+# 安装依赖
+$ yarn & npm i & bun i
+
+# 运行项目
+$ bun run docs:dev
+$ yarn docs:dev
+$ npm run docs:dev
+```
+
 ##### 当前翻译进度：
 
 |    英文目录     |   中文目录   |  进度  | 状态 |
