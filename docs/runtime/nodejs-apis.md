@@ -3,7 +3,7 @@
 Bun 旨在实现完整的 Node.js API 兼容性。大多数用于 Node.js 环境的 npm 软件包都可以使用 Bun 来替代; 最佳方法是尝试一下。此页面会定期更新，以反映最新版本的 Bun 的兼容性状态。如果您遇到特定软件包的任何错误，请[联系我们](https://bun.sh/issues) 这将有助于我们确定下一步工作的优先级。
 
 ::: warning 🚨 注意事项
-<b>此页面更新呢 与 官方文档 并非同步，页面内容可能有所不同，请及时参考 [官方文档](https://bun.sh/docs/runtime/nodejs-apis)</b>
+**此页面更新呢 与 官方文档 并非同步，页面内容可能有所不同，请及时参考 [官方文档](https://bun.sh/docs/runtime/nodejs-apis)**
 :::
 
 ## 内置模块
