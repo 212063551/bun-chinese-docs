@@ -46,6 +46,7 @@ export default defineConfig({
 		sidebar: [
 			{
 				text: '介绍',
+				collapsed: true,
 				items: [
 					{ text: '什么是Bun？', link: '/docs/index.md' },
 					{ text: '安装', link: '/docs/installation.md' },
@@ -56,6 +57,7 @@ export default defineConfig({
 			},
 			{
 				text: '运行时',
+				collapsed: true,
 				items: [
 					{ text: 'bun run', link: '/docs/cli/run.md' },
 					{ text: '文件类型', link: '/docs/runtime/loaders.md' },
@@ -85,5 +87,8 @@ export default defineConfig({
 			next: '下一页',
 		},
 		outlineTitle: '本页',
+		sidebarMenuLabel: '目录',
+		returnToTopLabel: '返回顶部',
+		darkModeSwitchLabel: '外观',
 	},
 });
