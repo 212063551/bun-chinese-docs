@@ -71,7 +71,7 @@ export default defineConfig({
 						link: '/docs/runtime/nodejs-apis.md',
 					},
 					{
-						text: '插件',
+						text: 'Plugins （ 插件 ）',
 						link: '/docs/runtime/plugins.md',
 					},
 				],

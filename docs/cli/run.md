@@ -95,7 +95,7 @@ $ bun clean
 Bun 在 shell 中执行命令。bun 将使用它找到的第一个 shell，bun 默认以下顺序查找 shell : `bash`、`sh`、`zsh`。
 
 ::: info 📌 小知识
-<b>⚡️ bun 拥有更快的的速度</b>
+**⚡️ bun 拥有更快的的速度**
 
 npm 在 Linux 上运行的启动时间大约是 170ms；而在 Bun 上则是 6ms。
 
@@ -146,6 +146,6 @@ $ bun run --bun vite
 ```
 
 ::: info 📌 小知识
-<b> bun 在默认情况( 即不添加 `--bun` ) 的情况下 bun 会使用 node 调用 cli 而不是 bun 自身
-`--bun` 则可以使用 bun 来替代 node </b>
+**bun 在默认情况 ( 即不添加 `--bun` ) 的情况下 bun 会使用 node 调用 cli 而不是 bun 自身
+`--bun` 则可以使用 bun 来替代 node**
 :::
