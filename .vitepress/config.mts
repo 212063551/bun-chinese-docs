@@ -74,6 +74,12 @@ export default defineConfig({
 						text: 'Plugins （ 插件 ）',
 						link: '/docs/runtime/plugins.md',
 					},
+					{
+						text: '监视模式',
+						link: '/docs/runtime/hot.md',
+					},
+					{ text: '模块解析', link: '/docs/runtime/modules.md' },
+					{ text: '自动安装', link: '/docs/runtime/autoimport.md' },
 				],
 			},
 		],
