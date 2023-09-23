@@ -148,8 +148,9 @@ $ cd foo
 :::warning 🚨 请注意以下内容
 
 [以下内容参杂个人理解,请阅读原文获取更详细的内容](https://bun.sh/docs/templates#environment-variables)
-
 :::
+
+::: details `Bun csreate` 的工作原理
 
 ##### 远程模板
 
@@ -185,3 +186,5 @@ $ cd foo
    - 将`gitignore`重命名为`.gitignore`。npm 会自动删除包中显示的`.gitignore`文件。
    - 如果存在依赖关系，则在安装 node_modules 时,同步在单独的线程中运行。
    - 使用 libgit2(如果可用)进行了测试，在微基准测试中执行速度降低了 3 倍
+
+:::
