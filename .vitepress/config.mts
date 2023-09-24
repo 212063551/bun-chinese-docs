@@ -80,6 +80,10 @@ export default defineConfig({
 					},
 					{ text: '模块解析', link: '/docs/runtime/modules.md' },
 					{ text: '自动安装', link: '/docs/runtime/autoimport.md' },
+					{
+						text: 'Bun 配置文件（ bunfig.toml ）',
+						link: '/docs/runtime/bunfig.md',
+					},
 				],
 			},
 		],
