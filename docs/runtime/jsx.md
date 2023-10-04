@@ -251,7 +251,7 @@ console.log(
 ```
 
 Bun 将在记录时漂亮的打印出组件树：
-![Logging](../../imgs/Logging.png)
+![Logging](../../public/Logging.png)
 
 ## Prop punning
 
