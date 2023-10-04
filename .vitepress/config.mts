@@ -84,7 +84,16 @@ export default defineConfig({
 						text: 'Bun 配置文件（ bunfig.toml ）',
 						link: '/docs/runtime/bunfig.md',
 					},
+					{
+						text: 'Bun 调试器（ Debugger ）',
+						link: '/docs/runtime/debugger.md',
+					},
 				],
+			},
+			{
+				text: '包管理器',
+				collapsed: true,
+				items: [{ text: 'bun安装', link: '/docs/cli/install.md' }],
 			},
 		],
 
