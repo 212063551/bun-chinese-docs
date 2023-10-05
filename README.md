@@ -31,7 +31,7 @@ $ npm run docs:dev
 | :-------------: | :----------: | :----: | :--: |
 |      Intro      |     介绍     |  100%  |  ✅  |
 |     Runtime     |    运行时    |  100%  |  ✅  |
-| package manager |   包管理器   |  20%   |  ❌  |
+| package manager |   包管理器   |  100%  |  ✅  |
 |     Bundler     |     打包     | 未开始 |  ❌  |
 |   Test runner   |   单元测试   | 未开始 |  ❌  |
 | package runner  | npx bun 版本 | 未开始 |  ❌  |
