@@ -93,7 +93,11 @@ export default defineConfig({
 			{
 				text: '包管理器',
 				collapsed: true,
-				items: [{ text: 'bun安装', link: '/docs/cli/install.md' }],
+				items: [
+					{ text: 'bun安装', link: '/docs/cli/install.md' },
+					{ text: '全局缓存', link: '/docs/install/cache.md' },
+					{ text: '工作区', link: '/docs/install/workspaces.md' },
+				],
 			},
 		],
 
