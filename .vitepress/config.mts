@@ -99,6 +99,12 @@ export default defineConfig({
 					{ text: '工作区', link: '/docs/install/workspaces.md' },
 				],
 			},
+			{
+				text: '打包器',
+				collapsed: true,
+
+				items: [{ text: 'Bun.build', link: '/docs/bundler/index.md' }],
+			},
 		],
 
 		socialLinks: [
