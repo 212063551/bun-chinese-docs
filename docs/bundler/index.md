@@ -338,4 +338,857 @@ $ bun build --entrypoints ./index.ts --outdir ./out --target browser
 
 ---
 
-等待翻译...
+## `format`
+
+指定生成包中使用的模块格式。
+
+目前打包器仅支持一种模块格式："esm". 支持"cjs"并"iife"已计划。
+
+:::code-group
+
+```js [JavaScript]
+await Bun.build({
+	entrypoints: ['./index.tsx'],
+	outdir: './out',
+	format: 'esm',
+});
+```
+
+```sh
+$ bun build ./index.tsx --outdir ./out --format esm
+```
+
+:::
+
+## `splitting`
+
+是否启用代码拆分。
+
+:::code-group
+
+```js [JavaScript]
+await Bun.build({
+	entrypoints: ['./index.tsx'],
+	outdir: './out',
+	splitting: false, // default
+});
+```
+
+```sh
+$ bun build ./index.tsx --outdir ./out --splitting
+```
+
+:::
+
+当为 true 时，打包器将启用代码拆分。当多个入口都导入相同的文件，模块或文件/模块集时，将共享代码拆分为单独的包通常很有用。这个共享束被称为 chunk （ 通用模块 ）。请考虑以下文件:
+
+:::code-group
+
+```ts [entry-a.ts]
+import { shared } from './shared.ts';
+```
+
+```ts [entry-b.ts]
+import { shared } from './shared.ts';
+```
+
+```ts [shared.ts]
+export const shared = 'shared';
+```
+
+:::
+
+要在启用代码拆分的情况下打包 entry-a.ts 和 entry-b.ts，请执行以下操作:
+
+:::code-group
+
+```js [JavaScript]
+await Bun.build({
+	entrypoints: ['./entry-a.ts', './entry-b.ts'],
+	outdir: './out',
+	splitting: true,
+});
+```
+
+```sh [entry-b.ts]
+$ bun build ./entry-a.ts ./entry-b.ts --outdir ./out --splitting
+```
+
+:::
+
+运行此构建将生成以下文件：
+
+```
+.
+├── entry-a.tsx
+├── entry-b.tsx
+├── shared.tsx
+└── out
+    ├── entry-a.js
+    ├── entry-b.js
+    └── chunk-2fce6291bf86559d.js
+```
+
+生成的 chunk-2fce6291bf86559d.js 文件包含共享代码。为避免冲突，默认情况下，文件名会自动包含内容哈希。这可以通过命名进行[定制](/docs/bundler#naming)。
+
+## `plugins`
+
+打包期间使用的插件列表。
+
+:::code-group
+
+```js [JavaScript]
+await Bun.build({
+	entrypoints: ['./index.tsx'],
+	outdir: './out',
+	plugins: [
+		/* ... */
+	],
+});
+```
+
+```sh [entry-b.ts]
+n/a
+```
+
+:::
+
+Bun 为 Bun 的运行时和 打包器 实现了一个[通用的插件系统](/docs/bundler/plugins)。有关完整文档，请参阅插件文档。
+
+## `sourcemap`
+
+指定要生成的 sourcemap 的类型。
+
+:::code-group
+
+```js [JavaScript]
+await Bun.build({
+	entrypoints: ['./index.tsx'],
+	outdir: './out',
+	sourcemap: 'external', // default "none"
+});
+```
+
+```sh [entry-b.ts]
+$ bun build ./index.tsx --outdir ./out --sourcemap=external
+
+```
+
+:::
+
+---
+
+`none`
+
+> 默认值。不生成 sourcemap。
+
+---
+
+`inline`
+
+> 将生成一个源地图，并将其作为 Base64 有效负载附加到所生成的包的末尾。
+
+```js
+// <bundled code here>
+
+//# sourceMappingURL=data:application/json;base64,<encoded sourcemap here>
+```
+
+---
+
+`external`
+
+> 在每个 \*.js bundle 旁边创建一个单独的 \*.js.map 文件。
+
+> 生成的包，包含可用于将包与其对应的 sourcemap 关联的调试 id。此 `debugId` 作为注释添加到文件的底部。
+
+```js
+// <generated bundle code>
+
+//# debugId=<DEBUG ID>
+```
+
+关联的 \*.js.map 源地图将是一个 JSON 文件，其中包含等价的 `debugId` 属性。
+
+## `minify`
+
+是否启用压缩。默认为 false。
+
+> 当以 bun 为目标时，标识符将在默认情况下被压缩。
+
+要启用所有缩小选项，请执行以下操作：
+
+:::code-group
+
+```js [JavaScript]
+await Bun.build({
+	entrypoints: ['./index.tsx'],
+	outdir: './out',
+	minify: true, // default false
+});
+```
+
+```sh [CLI]
+$ bun build ./index.tsx --outdir ./out --minify
+
+```
+
+:::
+
+要精确地启用某些压缩，请执行以下操作：
+
+:::code-group
+
+```js [JavaScript]
+await Bun.build({
+	entrypoints: ['./index.tsx'],
+	outdir: './out',
+	minify: {
+		whitespace: true,
+		identifiers: true,
+		syntax: true,
+	},
+});
+```
+
+```sh [CLI]
+$ bun build ./index.tsx --outdir ./out --minify-whitespace --minify-identifiers --minify-syntax
+```
+
+:::
+
+## `external`
+
+要考虑外部的导入路径列表。默认为[]。
+
+:::code-group
+
+```js [JavaScript]
+await Bun.build({
+	entrypoints: ['./index.tsx'],
+	outdir: './out',
+	external: ['lodash', 'react'], // default: []
+});
+```
+
+```sh [CLI]
+$ bun build ./index.tsx --outdir ./out --external lodash --external react
+```
+
+:::
+
+外部导入是不会包含在最终包中的导入。相反，import 语句将保持不变，以便在运行时解析。
+
+例如，考虑以下入口点文件：
+
+```ts
+import _ from 'lodash';
+import { z } from 'zod';
+
+const value = z.string().parse('Hello world!');
+console.log(_.upperCase(value));
+```
+
+通常，捆绑 index.tsx 将生成包含 “zod” 包的整个源代码的捆绑包。如果相反，我们希望将 import 语句保留原样，我们可以将其标记为 external:
+
+:::code-group
+
+```js [JavaScript]
+await Bun.build({
+	entrypoints: ['./index.tsx'],
+	outdir: './out',
+	external: ['zod'],
+});
+```
+
+```sh [CLI]
+$ bun build ./index.tsx --outdir ./out --external zod
+```
+
+:::
+
+生成的包如下所示：
+
+```js
+import { z } from 'zod';
+
+// ...
+// the contents of the "lodash" package
+// including the `_.upperCase` function
+
+var value = z.string().parse('Hello world!');
+console.log(_.upperCase(value));
+```
+
+要将所有导入标记为外部，请使用通配符 \*:
+
+:::code-group
+
+```js [JavaScript]
+await Bun.build({
+	entrypoints: ['./index.tsx'],
+	outdir: './out',
+	external: ['*'],
+});
+```
+
+```sh [CLI]
+$ bun build ./index.tsx --outdir ./out --external '*'
+```
+
+:::
+
+## `naming`
+
+自定义生成的文件名。默认值为./[dir]/[name].[ext]。
+
+:::code-group
+
+```js [JavaScript]
+await Bun.build({
+	entrypoints: ['./index.tsx'],
+	outdir: './out',
+	naming: '[dir]/[name].[ext]', // default
+});
+```
+
+```sh [CLI]
+$ bun build ./index.tsx --outdir ./out --entry-naming [dir]/[name].[ext]
+```
+
+:::
+
+默认情况下，生成的包的名称基于关联入口点的名称。
+
+```
+.
+├── index.tsx
+└── out
+    └── index.js
+```
+
+使用多个入口点，生成的文件层次结构将反映入口点的目录结构。
+
+```
+.
+├── index.tsx
+└── nested
+    └── index.tsx
+└── out
+    ├── index.js
+    └── nested
+        └── index.js
+```
+
+生成的文件的名称和位置可以使用命名字段进行定制。此字段接受模板字符串，该字符串用于生成与入口点对应的所有包的文件名。其中，以下令牌将替换为其对应的值：
+
+- [name] - 入口点文件的名称，不带扩展名。
+- [ext] - 生成的包的扩展名。
+- [hash] - 包内容的哈希。
+- [dir] - 从生成根目录到文件父目录的相对路径。
+
+例如:
+
+|        Token        | `[name]` | [ext] |   [hash]   |     [dir]     |
+| :-----------------: | :------: | :---: | :--------: | :-----------: |
+|    `./index.tsx`    | `index`  | `js`  | `a1b2c3d4` | "" (空字符串) |
+| `./nested/entry.ts` | `entry`  | `js`  | `c3d4e5f6` |   `nested`    |
+
+我们可以组合这些标记来创建一个模板字符串。例如，要在生成的包的名称中包含哈希值:
+
+:::code-group
+
+```js [JavaScript]
+await Bun.build({
+	entrypoints: ['./index.tsx'],
+	outdir: './out',
+	naming: 'files/[dir]/[name]-[hash].[ext]',
+});
+```
+
+```sh [CLI]
+$ bun build ./index.tsx --outdir ./out --entry-naming [name]-[hash].[ext]
+```
+
+:::
+
+此构建将产生以下文件结构：
+
+```
+.
+├── index.tsx
+└── out
+    └── files
+        └── index-a1b2c3d4.js
+```
+
+当为命名字段提供字符串时，它仅用于与入口点对应的[块](/docs/bundler#splitting)。区块和复制资产的名称不受影响。使用 JavaScript API，可以为每种类型的生成文件指定单独的模板字符串。
+
+:::code-group
+
+```js [JavaScript]
+await Bun.build({
+	entrypoints: ['./index.tsx'],
+	outdir: './out',
+	naming: {
+		// default values
+		entry: '[dir]/[name].[ext]',
+		chunk: '[name]-[hash].[ext]',
+		asset: '[name]-[hash].[ext]',
+	},
+});
+```
+
+```sh [CLI]
+$ bun build ./index.tsx --outdir ./out --entry-naming "[dir]/[name].[ext]" --chunk-naming "[name]-[hash].[ext]" --asset-naming "[name]-[hash].[ext]"
+```
+
+:::
+
+## `root`
+
+项目的根目录。
+
+:::code-group
+
+```js [JavaScript]
+await Bun.build({
+	entrypoints: ['./pages/a.tsx', './pages/b.tsx'],
+	outdir: './out',
+	root: '.',
+});
+```
+
+```[CLI]
+n/a
+```
+
+:::
+
+如果未指定，它将被计算为所有入口点文件的第一个公共祖先。请考虑以下文件结构：
+
+```
+.
+└── pages
+  └── index.tsx
+  └── settings.tsx
+```
+
+我们可以在 pages 目录中构建两个入口点:
+
+:::code-group
+
+```js [JavaScript]
+await Bun.build({
+	entrypoints: ['./pages/index.tsx', './pages/settings.tsx'],
+	outdir: './out',
+});
+```
+
+```sh [CLI]
+$ bun build ./pages/index.tsx ./pages/settings.tsx --outdir ./out
+```
+
+:::
+
+这将产生如下所示的文件结构：
+
+```
+.
+└── pages
+  └── index.tsx
+  └── settings.tsx
+└── out
+  └── index.js
+  └── settings.js
+```
+
+由于 Pages 目录是入口点文件的第一个公共祖先，因此它被视为项目根目录。这意味着生成的包位于 out 目录的顶层；没有 out/ages 目录。
+
+可以通过指定 root 选项来覆盖此行为:
+
+:::code-group
+
+```js [JavaScript]
+await Bun.build({
+	entrypoints: ['./pages/index.tsx', './pages/settings.tsx'],
+	outdir: './out',
+	root: '.',
+});
+```
+
+```sh [CLI]
+$ bun build ./pages/index.tsx ./pages/settings.tsx --outdir ./out --root .
+```
+
+:::
+
+通过指定 . 作为 root，生成的文件结构将如下所示:
+
+```
+.
+└── pages
+  └── index.tsx
+  └── settings.tsx
+└── out
+  └── pages
+    └── index.js
+    └── settings.js
+```
+
+## `publicPath`
+
+要附加到打包代码中任何导入路径的前缀。
+
+在许多情况下，生成的包将不包含 import 语句。毕竟，打包的目标是将所有代码合并到一个文件中。然而，在许多情况下，生成的捆绑包将包含 import 语句。
+
+- 资产入口 — 在导入无法识别的文件类型(如\*.svg)时，打包器遵循[文件加载器](/docs/bundler/loaders#file)，它会将文件原样复制到 outdir 中。将导入转换为变量
+
+- 外部模块 - 可以将文件和模块标记为[外部](/docs/bundler#external)，在这种情况下，它们不会包含在捆绑包中。相反，导入语句将保留在最终包中。
+
+- 程序分块 - 当启用拆分时，打包器可以生成表示在多个入口点之间共享的代码的单独的 “块” 文件。
+
+在上述任何一种情况下，最终包都可能包含指向其他文件的路径。默认情况下，这些导入是相对的。以下是一个简单的资产导入示例：
+
+:::code-group
+
+```js [Input]
+import logo from './logo.svg';
+console.log(logo);
+```
+
+```js [Output]
+// logo.svg is copied into <outdir>
+// and hash is added to the filename to prevent collisions
+var logo = './logo-a7305bdef.svg';
+console.log(logo);
+```
+
+:::
+
+设置 publicPath 将为所有文件路径添加指定值的前缀。
+
+:::code-group
+
+```js [JavaScript]
+await Bun.build({
+	entrypoints: ['./index.tsx'],
+	outdir: './out',
+	publicPath: 'https://cdn.example.com/', // default is undefined
+});
+```
+
+```[CLI]
+n/a;
+```
+
+:::
+
+输出文件现在应该如下所示。
+
+```js
+- var logo = './logo-a7305bdef.svg';
++ var logo = 'https://cdn.example.com/logo-a7305bdef.svg';
+```
+
+## `define`
+
+要在构建时替换的全局标识符的映射。此对象的键是标识符名称，值是将内联的 JSON 字符串。
+
+:::code-group
+
+```js [JavaScript]
+await Bun.build({
+	entrypoints: ['./index.tsx'],
+	outdir: './out',
+	define: {
+		STRING: JSON.stringify('value'),
+		'nested.boolean': 'true',
+	},
+});
+```
+
+```sh [CLI]
+$ bun build ./index.tsx --outdir ./out --define 'STRING="value"' --define "nested.boolean=true"
+```
+
+:::
+
+## `loader`
+
+文件扩展名到 [内置加载程序名称](/docs/bundler/loaders#built-in-loaders) 的映射。这可用于快速自定义某些文件文件的加载方式。
+:::code-group
+
+```js [JavaScript]
+await Bun.build({
+	entrypoints: ['./index.tsx'],
+	outdir: './out',
+	loader: {
+		'.png': 'dataurl',
+		'.txt': 'file',
+	},
+});
+```
+
+```sh [CLI]
+$ bun build ./index.tsx --outdir ./out --loader .png:dataurl --loader .txt:file
+```
+
+:::
+
+## Outputs
+
+Bun.build 函数返回一个 `Promise<BuildOutput>`，定义为:
+
+```ts
+interface BuildOutput {
+	outputs: BuildArtifact[];
+	success: boolean;
+	logs: Array<object>; // see docs for details
+}
+
+interface BuildArtifact extends Blob {
+	kind: 'entry-point' | 'chunk' | 'asset' | 'sourcemap';
+	path: string;
+	loader: Loader;
+	hash: string | null;
+	sourcemap: BuildArtifact | null;
+}
+```
+
+输出数组包含生成生成的所有文件。每个构件都实现了 Blob 接口。
+
+```ts
+const build = await Bun.build({
+	/* */
+});
+
+for (const output of build.outputs) {
+	await output.arrayBuffer(); // => ArrayBuffer
+	await output.text(); // string
+}
+```
+
+每个对象还包含以下属性：
+
+---
+
+`kind`
+
+> 这个文件是什么样的构建输出。构建生成包的入口点，代码拆分的 “块”，源映射和复制的资产 (如图像)。
+
+---
+
+`path`
+
+> 磁盘上文件的绝对路径
+
+---
+
+`loader`
+
+> 加载器被用来解释文件。请参阅 [bundler > Loaders](/docs/bundler/loaders) 以了解 Bun 如何将文件扩展名映射到适当的内置加载程序。
+
+---
+
+`hash`
+
+> 文件内容的哈希。始终为资产定义。
+
+---
+
+`sourcemap`
+
+> 与此文件对应的 `sourcemap` 文件 (如果已生成)。仅针对入口点和块定义。
+
+---
+
+与 `BunFile` 类似，`BuildArtifact` 对象可以直接传递到 `new Response()` 中。
+
+```ts
+const build = await Bun.build({
+	/* */
+});
+
+const artifact = build.outputs[0];
+
+// Content-Type header is automatically set
+return new Response(artifact);
+```
+
+Bun 运行时实现了 BuildArtifact 对象的特殊漂亮打印，使调试更容易。
+
+```js [Build script]
+// build.ts
+const build = await Bun.build({
+	/* */
+});
+
+const artifact = build.outputs[0];
+console.log(artifact);
+```
+
+```sh [Shell output]
+$ bun run build.ts
+
+# BuildArtifact (entry-point) {
+#  path: "./index.js",
+#  loader: "tsx",
+#  kind: "entry-point",
+#  hash: "824a039620219640",
+#  Blob (114 bytes) {
+#    type: "text/javascript;charset=utf-8"
+#  },
+#  sourcemap: null
+# }
+```
+
+:::
+
+## 可执行文件
+
+Bun 支持将 JavaScript/TypeScript 入口点 “编译” 为独立的可执行文件。此可执行文件包含 Bun 二进制文件的副本。
+
+```sh
+$ bun build ./cli.tsx --outfile mycli --compile
+$ ./mycli
+```
+
+有关完整文档，请参阅 [Bundler> Executables](/docs/bundler/executables)。
+
+## 日志和错误
+
+Bun.build 仅在提供无效选项时抛出读取 success 属性以确定构建是否成功; logs 属性将包含其他详细信息。
+
+```ts
+const result = await Bun.build({
+	entrypoints: ['./index.tsx'],
+	outdir: './out',
+});
+
+if (!result.success) {
+	console.error('Build failed');
+	for (const message of result.logs) {
+		// Bun will pretty print the message object
+		console.error(message);
+	}
+}
+```
+
+每条消息都是一个 BuildMessage 或 ResolveMessage 对象，可用于跟踪生成过程中发生的问题。
+
+```ts
+class BuildMessage {
+	name: string;
+	position?: Position;
+	message: string;
+	level: 'error' | 'warning' | 'info' | 'debug' | 'verbose';
+}
+
+class ResolveMessage extends BuildMessage {
+	code: string;
+	referrer: string;
+	specifier: string;
+	importKind: ImportKind;
+}
+```
+
+如果希望从失败的生成引发错误，请考虑将日志传递给 AggregateError。如果没有被捕获，Bun 会漂亮地打印出包含的消息。
+
+```ts
+if (!result.success) {
+	throw new AggregateError(result.logs, 'Build failed');
+}
+```
+
+## 参考
+
+```ts
+interface Bun {
+	build(options: BuildOptions): Promise<BuildOutput>;
+}
+
+interface BuildOptions {
+	entrypoints: string[]; // required
+	outdir?: string; // default: no write (in-memory only)
+	format?: 'esm'; // later: "cjs" | "iife"
+	target?: 'browser' | 'bun' | 'node'; // "browser"
+	splitting?: boolean; // true
+	plugins?: BunPlugin[]; // [] // See https://bun.sh/docs/bundler/plugins
+	loader?: { [k in string]: Loader }; // See https://bun.sh/docs/bundler/loaders
+	manifest?: boolean; // false
+	external?: string[]; // []
+	sourcemap?: 'none' | 'inline' | 'external'; // "none"
+	root?: string; // computed from entrypoints
+	naming?:
+		| string
+		| {
+				entry?: string; // '[dir]/[name].[ext]'
+				chunk?: string; // '[name]-[hash].[ext]'
+				asset?: string; // '[name]-[hash].[ext]'
+		  };
+	publicPath?: string; // e.g. http://mydomain.com/
+	minify?:
+		| boolean // false
+		| {
+				identifiers?: boolean;
+				whitespace?: boolean;
+				syntax?: boolean;
+		  };
+}
+
+interface BuildOutput {
+	outputs: BuildArtifact[];
+	success: boolean;
+	logs: Array<BuildMessage | ResolveMessage>;
+}
+
+interface BuildArtifact extends Blob {
+	path: string;
+	loader: Loader;
+	hash?: string;
+	kind: 'entry-point' | 'chunk' | 'asset' | 'sourcemap';
+	sourcemap?: BuildArtifact;
+}
+
+type Loader =
+	| 'js'
+	| 'jsx'
+	| 'ts'
+	| 'tsx'
+	| 'json'
+	| 'toml'
+	| 'file'
+	| 'napi'
+	| 'wasm'
+	| 'text';
+
+interface BuildOutput {
+	outputs: BuildArtifact[];
+	success: boolean;
+	logs: Array<BuildMessage | ResolveMessage>;
+}
+
+declare class ResolveMessage {
+	readonly name: 'ResolveMessage';
+	readonly position: Position | null;
+	readonly code: string;
+	readonly message: string;
+	readonly referrer: string;
+	readonly specifier: string;
+	readonly importKind:
+		| 'entry_point'
+		| 'stmt'
+		| 'require'
+		| 'import'
+		| 'dynamic'
+		| 'require_resolve'
+		| 'at'
+		| 'at_conditional'
+		| 'url'
+		| 'internal';
+	readonly level: 'error' | 'warning' | 'info' | 'debug' | 'verbose';
+
+	toString(): string;
+}
+```
